@@ -91,10 +91,10 @@ public class ControlSystem : CrestronControlSystem
             Task.Run(async () =>
             {
                 await WebHost.RunAsync(roomConfiguration, loggerFactory, settings.ApiPort, cancellationToken);
-                              
+
             }, cancellationToken);
         }
-        catch(OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
             ErrorLog.Notice($"Normal Shutdown");
         }
@@ -112,6 +112,10 @@ public class ControlSystem : CrestronControlSystem
         // TODO: Lab 1.1d - Publish the connection details whenever the panel comes online
         // Hint: Use the [ConnectionDetailsPublisher].Publish method and perhaps log a warning if it returns false.
         // Add your work below this line
+        if (args.DeviceOnLine && _publisher?.Publish() == false)
+        {
+            ErrorLog.Warn("Failed to publish connection details");
+        }
 
         // Lab 1.1d - End
     }
@@ -138,3 +142,5 @@ public class ControlSystem : CrestronControlSystem
         _shutdown.Dispose();
     }
 }
+
+//#1Student!

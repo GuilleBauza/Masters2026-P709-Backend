@@ -53,6 +53,7 @@ public static class WebHost
         //       The room state will be added using lazy instantiation - using the generic templated form of adding a singleton.
         // Ref:  https://learn.microsoft.com/en-us/aspnet/core/fundamentals/?view=aspnetcore-10.0
         // Add your work below this line
+        builder.Services.AddSingleton(roomConfiguration);
 
         // Lab 1.1c - End
 
@@ -63,6 +64,12 @@ public static class WebHost
         //       convert enums to their string representation.
         // Ref:  https://learn.microsoft.com/en-us/aspnet/core/signalr/introduction?view=aspnetcore-10.0
         // Add your work below this line
+        builder.Services.AddSignalR()
+            .AddNewtonsoftJsonProtocol(options =>
+            {
+                options.PayloadSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.PayloadSerializerSettings.Converters.Add(new StringEnumConverter());
+            });
 
         // Lab 1.1a - End
 
@@ -80,6 +87,9 @@ public static class WebHost
         // Hint: Finally, we need to tell app to map the SignalR hub using the controller implementation and
         //       specify its path (also defined in the controller implementation).
         // Add your work below this line
+
+        app.MapHub<RoomHub>(RoomHub.Path);
+        
 
         // Lab 1.1b - End
 

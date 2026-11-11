@@ -22,6 +22,8 @@ public class RoomHub(RoomConfiguration roomConfiguration, RoomState roomState, I
     // Ref: The README.md holds definition of the SignalR API
     // Add your work below this line
 
+
+
     // Lab 1.2a - End
 
     // TODO: Lab 1.3 - Hook up the lighting SignalR commands
