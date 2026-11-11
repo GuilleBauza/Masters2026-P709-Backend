@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -55,7 +56,10 @@ public sealed record RoomConfiguration(
 
         // Lab 0.1 - End
 
-        return null;
+        var config = JsonConfigFile.Load<RoomConfiguration>(Path.Combine(folder, FileName));
+        RoomConfigValidator.Validate(config);
+
+        return config;
     }
 }
 
